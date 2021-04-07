@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <title>Создавать контрольные легко!</title>
+</head>
+<body>
+<div class="alert alert-primary" role="alert">
+    <button onclick="redirect_create();">Страница создания</button>
+    <script>
+        function redirect_create(){window.location = 'http://127.0.0.1:8000/create';}
+    </script>
+    <button onclick="redirect_authorization();">Страница автроизации</button>
+    <script>
+        function redirect_authorization(){window.location = 'http://127.0.0.1:8000/authorization';}
+    </script>
+    <button onclick="redirect_registration();">Страница регистрации</button>
+    <script>
+        function redirect_registration(){window.location = 'http://127.0.0.1:8000/registration';}
+    </script>
+</div>
+</body>
+</html>
