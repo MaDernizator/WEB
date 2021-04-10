@@ -14,6 +14,17 @@ pattern_to_type = sqlalchemy.Table(
 )
 
 
+
+pattern_to_user = sqlalchemy.Table(
+    'pattern_to_user',
+    SqlAlchemyBase.metadata,
+    sqlalchemy.Column('patterns', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('patterns.id')),
+    sqlalchemy.Column('users', sqlalchemy.Integer,
+                      sqlalchemy.ForeignKey('users.id'))
+)
+
+
 class Pattern(SqlAlchemyBase):
     __tablename__ = 'patterns'
 
