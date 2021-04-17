@@ -23,8 +23,8 @@ class DocGenerator:
                     self.patterns.append(Pattern(pattern_id, int(pattern)))
 
     def archive(self):
-        dir = zipfile.ZipFile('generated_documents', 'w')
-        for folder, subfolders, files in os.walk('generated_documents'):
+        dir = zipfile.ZipFile(f'generated_documents\\{self.name}.zip', 'w')
+        for folder, subfolders, files in os.walk(f'generated_documents'):
             for file in files:
                 if file.endswith('.docx'):
                     dir.write(os.path.join(folder, file),
@@ -58,3 +58,4 @@ class DocGenerator:
             generate_variant(variant)
         answers.save('generated_documents/' + self.name + '_ответы.docx')
         self.archive()
+        return self.name

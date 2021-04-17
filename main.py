@@ -22,11 +22,10 @@ def create():
 
     elif request.method == 'POST':
 
-
         doc_generator = DocGenerator(request.form)
-        doc_generator.generate_document()
+        name = doc_generator.generate_document()
 
-        return render_template('downolad.html')
+        return render_template('downolad.html', name=name)
 
 
 @app.route('/authorization')
