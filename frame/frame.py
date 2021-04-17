@@ -48,7 +48,7 @@ class DocGenerator:
                     p.alignment = 3
                     par.add_run(f'\n№{number} - ' + str(task_gen.get_text()[1]))
                     number += 1
-            tasks.save('generated_documents/' + self.name + f'_variant-{variant}.docx')
+            tasks.save('generated_documents/' + self.name + f'_вариант-{variant}.docx')
             # tasks.save(directory + '/' + self.name_edit.text() + f'_вариант-{variant}.docx')
 
         answers = Document()
@@ -56,5 +56,5 @@ class DocGenerator:
             answers.add_heading(f'Вариант-{variant}', 0)
             par = answers.add_paragraph()
             generate_variant(variant)
-        answers.save('generated_documents/' + self.name + '_otveti.docx')
+        answers.save('generated_documents/' + self.name + '_ответы.docx')
         self.archive()

@@ -22,6 +22,7 @@ def create():
 
     elif request.method == 'POST':
 
+
         doc_generator = DocGenerator(request.form)
         doc_generator.generate_document()
 
