@@ -17,25 +17,15 @@ def welcome():
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'GET':
-        # return render_template('create.html', temp=get_temp())
-        # print(get_subjects() + ([[0, 'Все']]))
-        # print(get_subjects(),get_types(),get_patterns())
         return render_template('create.html', subjects=get_subjects() + [[0, 'Все']],
                                types=get_types() + [[0, 'Все']], patterns=get_patterns())
 
     elif request.method == 'POST':
-        # print('генерирует')
-        # print(type(request.form))
-        # for i in request.form:
-        #     print('Перебор', i)
-        # print(request.form.getlist('variant_count'))
 
         doc_generator = DocGenerator(request.form)
         doc_generator.generate_document()
 
-        # print('2')
-
-        return 'генерирует'
+        return render_template('downolad.html')
 
 
 @app.route('/authorization')
@@ -50,8 +40,4 @@ def registration():
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
-    # db_sess = db_session.create_session()
-    # user = db_sess.query(Subject).all()
-    # for i in user:
-    #     print(i.name)
     app.run(port=8000, host='127.0.0.1')

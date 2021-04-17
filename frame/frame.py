@@ -1,7 +1,8 @@
 from docx import Document
 from frame.task_generator import TaskGenerator
 from frame.task_generator import Pattern
-
+import os
+import zipfile
 
 import os
 import sys
@@ -21,10 +22,21 @@ class DocGenerator:
                     print(pattern_id, int(pattern))
                     self.patterns.append(Pattern(pattern_id, int(pattern)))
 
+    def archive(self):
+        dir = zipfile.ZipFile('generated_documents', 'w')
+        for folder, subfolders, files in os.walk('generated_documents'):
+            for file in files:
+                if file.endswith('.docx'):
+                    dir.write(os.path.join(folder, file),
+                              os.path.relpath(os.path.join(folder, file),
+                                              'generated_documents'),
+                              compress_type=zipfile.ZIP_DEFLATED)
 
+        dir.close()
 
     def generate_document(self):
         print('генирируем')
+
         def generate_variant(variant):
             tasks = Document()
             tasks.add_heading(self.name + f' Вариант-{variant}', 0)
@@ -36,7 +48,7 @@ class DocGenerator:
                     p.alignment = 3
                     par.add_run(f'\n№{number} - ' + str(task_gen.get_text()[1]))
                     number += 1
-            tasks.save('generated_documents/' + self.name + f'_вариант-{variant}.docx')
+            tasks.save('generated_documents/' + self.name + f'_variant-{variant}.docx')
             # tasks.save(directory + '/' + self.name_edit.text() + f'_вариант-{variant}.docx')
 
         answers = Document()
@@ -44,4 +56,5 @@ class DocGenerator:
             answers.add_heading(f'Вариант-{variant}', 0)
             par = answers.add_paragraph()
             generate_variant(variant)
-        answers.save('generated_documents/' + self.name + '_ответы.docx')
+        answers.save('generated_documents/' + self.name + '_otveti.docx')
+        self.archive()
