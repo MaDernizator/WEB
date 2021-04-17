@@ -2,6 +2,24 @@ from random import choice
 from time import time
 import numpy
 import math
+from data import db_session
+from data.patterndb import PatternDb
+
+class Pattern:
+    def __init__(self, id, count):
+        self.id, self.count = id, count
+
+    def get_count(self):
+        return self.count
+
+    def get_pattern(self):
+        db_session.global_init("db/blogs.db")
+        db_sess = db_session.create_session()
+        pattern = db_sess.query(PatternDb).filter(PatternDb.id == self.id).first()
+        return pattern.content
+
+
+
 
 
 class TaskGenerator:

@@ -1,7 +1,7 @@
 from data import db_session
 from data.subject import Subject
 from data.type import Type
-from data.pattern import Pattern
+from data.patterndb import PatternDb
 from data.type import type_to_subject
 
 
@@ -32,7 +32,7 @@ def get_types(subjects=None) -> list:
 def get_patterns(types=None) -> list:
     db_session.global_init("../db/blogs.db")
     db_sess = db_session.create_session()
-    patterns = db_sess.query(Pattern).all()
+    patterns = db_sess.query(PatternDb).all()
     res = []
     for pattern in patterns:
         if types:
@@ -42,7 +42,7 @@ def get_patterns(types=None) -> list:
                     correct = True
             if not correct:
                 continue
-        res.append([pattern.name, pattern.content])
+        res.append([pattern.id, pattern.content])
     return res
 
 

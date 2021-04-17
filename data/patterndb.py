@@ -25,7 +25,7 @@ pattern_to_user = sqlalchemy.Table(
 )
 
 
-class Pattern(SqlAlchemyBase):
+class PatternDb(SqlAlchemyBase):
     __tablename__ = 'patterns'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,

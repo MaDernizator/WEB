@@ -1,5 +1,7 @@
 from docx import Document
-from task_generator import TaskGenerator
+from frame.task_generator import TaskGenerator
+from frame.task_generator import Pattern
+
 
 import os
 import sys
@@ -8,10 +10,21 @@ sys.excepthook = lambda *a: sys.__excepthook__(*a)
 
 
 class DocGenerator:
-    def __init__(self, name, variant_count, patterns):
-        self.name, self.variant_count, self.patterns = name, variant_count, patterns
+    def __init__(self, data):
+        self.name = data['name']
+        self.variant_count = int(data['variant_count'])
+        self.patterns = []
+        for pattern_id in data:
+            if pattern_id.isdigit():
+                pattern = data[pattern_id]
+                if pattern != '0':
+                    print(pattern_id, int(pattern))
+                    self.patterns.append(Pattern(pattern_id, int(pattern)))
+
+
 
     def generate_document(self):
+        print('генирируем')
         def generate_variant(variant):
             tasks = Document()
             tasks.add_heading(self.name + f' Вариант-{variant}', 0)
