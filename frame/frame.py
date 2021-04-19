@@ -58,4 +58,5 @@ class DocGenerator:
             generate_variant(variant)
         answers.save('generated_documents/' + self.name + '_ответы.docx')
         self.archive()
-        return self.name
+        return self.name  # если пользователь зареган - кладёт в его папку, если
+        # нет генерит и возвразает папку с рандомным названием

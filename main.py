@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file, send_from_directory
 from data import db_session
 from frame.bd_func import get_subjects, get_types, get_patterns
 from flask import request
@@ -25,7 +25,9 @@ def create():
         doc_generator = DocGenerator(request.form)
         name = doc_generator.generate_document()
 
-        return render_template('downolad.html', name=name)
+        # return render_template('downolad.html', name=name)
+        name += '.zip'
+        return  send_from_directory(directory='generated_documents', filename=name, as_attachment=True)
 
 
 @app.route('/authorization')
