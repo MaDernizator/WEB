@@ -27,7 +27,8 @@ def create():
 
         # return render_template('downolad.html', name=name)
         name += '.zip'
-        return  send_from_directory(directory='generated_documents', filename=name, as_attachment=True)
+        return send_from_directory(directory='generated_documents', filename=name,
+                                   as_attachment=True)
 
 
 @app.route('/authorization')
