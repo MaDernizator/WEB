@@ -1,0 +1,1 @@
+Перед запуском необходимо создать 'static/generated_documents/anonym'

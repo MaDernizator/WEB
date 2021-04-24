@@ -1,0 +1,6 @@
+SQLAlchemy==1.3.23
+Werkzeug==1.0.1
+numpy==1.19.3
+Flask==1.1.2
+schedule==0.6.0
+WTForms==2.3.3
