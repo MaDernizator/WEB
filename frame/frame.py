@@ -3,7 +3,7 @@ from frame.task_generator import TaskGenerator
 from frame.task_generator import Pattern
 import os
 import zipfile
-
+import time
 import os
 import sys
 
@@ -16,12 +16,21 @@ class DocGenerator:
         self.variant_count = int(data['variant_count'])
         self.user = user
         self.patterns = []
+        error = True
         for pattern_id in data:
             if pattern_id.isdigit():
                 pattern = data[pattern_id]
                 if pattern != '0':
-                    print(pattern_id, int(pattern))
+                    error = False
                     self.patterns.append(Pattern(pattern_id, int(pattern)))
+        if error:
+            raise ValueError
+
+    def write_log(self):
+        f = open('log/log.txt', 'a')
+        data = time.ctime(time.time())
+        f.write(f'create {data} | {self.user} | {self.name}\n')
+        f.close()
 
     def directory(self):
         if self.user not in os.listdir('static/generated_documents'):
@@ -67,4 +76,5 @@ class DocGenerator:
             generate_variant(variant)
         answers.save(f'static/generated_documents/{self.user}/' + self.name + '_ответы.docx')
         self.archive()
+        self.write_log()
         return self.name

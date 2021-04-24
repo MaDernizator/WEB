@@ -15,6 +15,7 @@ from flask_login import current_user
 from threading import Thread
 from clearing import clearing
 from data_func import get_docs
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mad'
@@ -66,21 +67,19 @@ def login():
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
-    print(current_user.is_authenticated)
-
     if request.method == 'GET':
         return render_template('create.html', subjects=get_subjects() + [[0, 'Все']],
                                types=get_types() + [[0, 'Все']], patterns=get_patterns())
 
     elif request.method == 'POST':
-        if current_user.is_authenticated:
-            doc_generator = DocGenerator(request.form, user=current_user.name)
-        else:
-            doc_generator = DocGenerator(request.form)
-
+        try:
+            if current_user.is_authenticated:
+                doc_generator = DocGenerator(request.form, user=current_user.name)
+            else:
+                doc_generator = DocGenerator(request.form)
+        except ValueError:
+            return render_template('error.html')
         name = doc_generator.generate_document()
-
-        # return render_template('downolad.html', name=name)
         name += '.zip'
         return send_from_directory(
             directory=f'static/generated_documents/{current_user.name if current_user.is_authenticated else "anonym"}',
@@ -108,6 +107,10 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        f = open('log/log.txt', 'a')
+        data = time.ctime(time.time())
+        f.write(f'register {data} | {user.name}\n')
+        f.close()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
