@@ -16,6 +16,7 @@ from threading import Thread
 from clearing import clearing
 from data_func import get_docs
 import time
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mad'
