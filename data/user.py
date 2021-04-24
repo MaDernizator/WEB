@@ -1,4 +1,3 @@
-import datetime
 import sqlalchemy
 # noinspection PyUnresolvedReferences
 from .db_session import SqlAlchemyBase

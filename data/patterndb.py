@@ -1,4 +1,3 @@
-
 import sqlalchemy
 from sqlalchemy import orm
 # noinspection PyUnresolvedReferences
@@ -12,8 +11,6 @@ pattern_to_type = sqlalchemy.Table(
     sqlalchemy.Column('type', sqlalchemy.Integer,
                       sqlalchemy.ForeignKey('types.id'))
 )
-
-
 
 pattern_to_user = sqlalchemy.Table(
     'pattern_to_user',
@@ -30,8 +27,6 @@ class PatternDb(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True, index=True)
-    # subject = sqlalchemy.Column(sqlalchemy.String, nullable=True)  #  если лень возится со связями
-    # type = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True, unique=True, index=True)
     content = sqlalchemy.Column(sqlalchemy.String, nullable=True, unique=True)
     type = orm.relation("Type", secondary="pattern_to_type", backref="pattern")

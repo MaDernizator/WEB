@@ -2,7 +2,6 @@ from data import db_session
 from data.subject import Subject
 from data.type import Type
 from data.patterndb import PatternDb
-from data.type import type_to_subject
 
 
 def get_subjects():
@@ -44,8 +43,3 @@ def get_patterns(types=None) -> list:
                 continue
         res.append([pattern.id, pattern.content])
     return res
-
-
-
-# print(get_types(subjects=[1]))
-# print(get_patterns(types=[4]))

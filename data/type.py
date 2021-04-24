@@ -1,9 +1,7 @@
-
 import sqlalchemy
 from sqlalchemy import orm
 # noinspection PyUnresolvedReferences
 from .db_session import SqlAlchemyBase
-
 
 type_to_subject = sqlalchemy.Table(
     'type_to_subject',
@@ -22,4 +20,3 @@ class Type(SqlAlchemyBase):
                            primary_key=True, autoincrement=True, index=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True, unique=True, index=True)
     subject = orm.relation("Subject", secondary="type_to_subject", backref="type")
-

@@ -23,9 +23,6 @@ class DocGenerator:
                     print(pattern_id, int(pattern))
                     self.patterns.append(Pattern(pattern_id, int(pattern)))
 
-
-
-
     def directory(self):
         if self.user not in os.listdir('static/generated_documents'):
             os.mkdir(f'static/generated_documents/{self.user}')
@@ -48,7 +45,6 @@ class DocGenerator:
 
     def generate_document(self):
 
-
         def generate_variant(variant):
             tasks = Document()
             tasks.add_heading(self.name + f' Вариант-{variant}', 0)
@@ -60,8 +56,8 @@ class DocGenerator:
                     p.alignment = 3
                     par.add_run(f'\n№{number} - ' + str(task_gen.get_text()[1]))
                     number += 1
-            tasks.save(f'static/generated_documents/{self.user}/' + self.name + f'_вариант-{variant}.docx')
-            # tasks.save(directory + '/' + self.name_edit.text() + f'_вариант-{variant}.docx')
+            tasks.save(
+                f'static/generated_documents/{self.user}/' + self.name + f'_вариант-{variant}.docx')
 
         self.directory()
         answers = Document()
@@ -71,5 +67,4 @@ class DocGenerator:
             generate_variant(variant)
         answers.save(f'static/generated_documents/{self.user}/' + self.name + '_ответы.docx')
         self.archive()
-        return self.name  # если пользователь зареган - кладёт в его папку, если
-        # нет генерит и возвразает папку с рандомным названием
+        return self.name

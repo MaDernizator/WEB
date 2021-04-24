@@ -1,23 +1,17 @@
-# from forms.user import RegisterForm
-from flask import Flask, render_template, send_file, send_from_directory
+from flask import Flask, render_template, send_from_directory
 from data import db_session
 from frame.bd_func import get_subjects, get_types, get_patterns
 from flask import request
 from frame.frame import DocGenerator
 from data.user import User
 from flask import redirect
-from flask_wtf import form
-from frame.frame import TaskGenerator
-import requests
 from flask_login import LoginManager
 from registrarion_form import RegisterForm
 from login_form import LoginForm
 from flask_login import login_user
 from flask_login import login_required
 from flask_login import logout_user
-import flask_login
 from flask_login import current_user
-import clearing
 from threading import Thread
 from clearing import clearing
 from data_func import get_docs

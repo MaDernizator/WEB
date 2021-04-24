@@ -3,7 +3,6 @@ import sqlalchemy
 from .db_session import SqlAlchemyBase
 
 
-
 class Subject(SqlAlchemyBase):
     __tablename__ = 'subjects'
 
