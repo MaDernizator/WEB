@@ -11,9 +11,10 @@ sys.excepthook = lambda *a: sys.__excepthook__(*a)
 
 
 class DocGenerator:
-    def __init__(self, data):
+    def __init__(self, data, user='anonym'):
         self.name = data['name']
         self.variant_count = int(data['variant_count'])
+        self.user = user
         self.patterns = []
         for pattern_id in data:
             if pattern_id.isdigit():
@@ -22,20 +23,31 @@ class DocGenerator:
                     print(pattern_id, int(pattern))
                     self.patterns.append(Pattern(pattern_id, int(pattern)))
 
+
+
+
+    def directory(self):
+        if self.user not in os.listdir('static/generated_documents'):
+            os.mkdir(f'static/generated_documents/{self.user}')
+
     def archive(self):
-        dir = zipfile.ZipFile(f'generated_documents\\{self.name}.zip', 'w')
-        for folder, subfolders, files in os.walk(f'generated_documents'):
+        dir = zipfile.ZipFile(f'static/generated_documents/{self.user}/{self.name}.zip', 'w')
+        for folder, subfolders, files in os.walk(f'static/generated_documents/{self.user}'):
             for file in files:
                 if file.endswith('.docx'):
                     dir.write(os.path.join(folder, file),
                               os.path.relpath(os.path.join(folder, file),
-                                              'generated_documents'),
+                                              f'static/generated_documents/{self.user}'),
                               compress_type=zipfile.ZIP_DEFLATED)
 
         dir.close()
+        for folder, subfolders, files in os.walk(f'static/generated_documents/{self.user}'):
+            for file in files:
+                if file.endswith('.docx'):
+                    os.remove(f'static/generated_documents/{self.user}/{file}')
 
     def generate_document(self):
-        print('генирируем')
+
 
         def generate_variant(variant):
             tasks = Document()
@@ -48,15 +60,16 @@ class DocGenerator:
                     p.alignment = 3
                     par.add_run(f'\n№{number} - ' + str(task_gen.get_text()[1]))
                     number += 1
-            tasks.save('generated_documents/' + self.name + f'_вариант-{variant}.docx')
+            tasks.save(f'static/generated_documents/{self.user}/' + self.name + f'_вариант-{variant}.docx')
             # tasks.save(directory + '/' + self.name_edit.text() + f'_вариант-{variant}.docx')
 
+        self.directory()
         answers = Document()
         for variant in range(1, int(self.variant_count) + 1):
             answers.add_heading(f'Вариант-{variant}', 0)
             par = answers.add_paragraph()
             generate_variant(variant)
-        answers.save('generated_documents/' + self.name + '_ответы.docx')
+        answers.save(f'static/generated_documents/{self.user}/' + self.name + '_ответы.docx')
         self.archive()
         return self.name  # если пользователь зареган - кладёт в его папку, если
         # нет генерит и возвразает папку с рандомным названием
