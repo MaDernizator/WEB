@@ -112,15 +112,15 @@ def reqister():
         data = time.ctime(time.time())
         f.write(f'register {data} | {user.name}\n')
         f.close()
+
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
 
 if __name__ == '__main__':
     db_session.global_init("db/blogs.db")
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-
-
 
 # if __name__ == '__main__':
 #     db_session.global_init("db/blogs.db") если запускаете сами
